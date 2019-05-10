@@ -117,9 +117,17 @@ def context(bot, trigger):
     context = '\n'.join(context)
     bot.say(transformer.predict(context))
 
+# FIXME: DRY
 @sopel.module.commands('context5')
 def context5(bot, trigger):
-    context = trigger.group(2).split('./#@')
-    context = '\n'.join(context)
-    for i in range(0, 5):
-        bot.say(transformer.predict(context))
+    n = 5
+    jid = bot.memory['jobs']['count'] + 1
+    bot.memory['jobs']['count'] = jid
+
+    lines = trigger.group(2).split('./#@')
+
+    bot.say('[{}] completing {} lines {} times'.format(jid, len(lines), n))
+
+    context = '\n'.join(lines)
+    for i in range(0, n):
+        bot.say("[{}.{}] {}".format(jid, i, transformer.predict(context)))
