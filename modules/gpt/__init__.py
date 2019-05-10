@@ -4,7 +4,7 @@ import os
 import tensorflow as tf
 import random
 
-import sopel.module
+import sopel.module, sopel.tools
 
 import encoder, model, sample
 
@@ -20,7 +20,7 @@ class Transformer:
         self.seed = seed
         self.nsamples = nsamples
         self.batch_size = 1
-        self.length = 10
+        self.length = 50
         self.temperature = temperature
         self.top_k = top_k
         self.nb_lines = nb_lines
@@ -86,11 +86,14 @@ class Transformer:
 def setup(bot):
     global transformer
     transformer = Transformer(
-        model_name='tdl-gpu-2',
+        model_name='tdl-gpu-3',
         length=20,
         nb_lines=1,
         temperature=0.8)
     transformer.setup()
+
+    bot.memory['jobs'] = sopel.tools.SopelMemory()
+    bot.memory['jobs']['count'] = 0
 
 def shutdown(bot):
     transformer.session.close()
@@ -99,22 +102,14 @@ def shutdown(bot):
 def complete(bot, trigger):
     bot.say(transformer.predict(trigger.group(2)))
 
-#@sopel.module.commands('conv')
-def conv(bot, trigger):
-    msg = predict(trigger.group(2), nb_lines=random.randint(3,8))
-    for line in msg.split('\n'):
-        bot.say(line)
-
-#@sopel.module.commands('longconv')
-def longconv(bot, trigger):
-    msg = predict(trigger.group(2), nb_lines=random.randint(10,20))
-    for line in msg.split('\n'):
-        bot.say(line)
-
 @sopel.module.commands('comp5')
 def comp5(bot, trigger):
-    for i in range(0, 5):
-        bot.say(transformer.predict(trigger.group(2)))
+    n = 5
+    jid = bot.memory['jobs']['count'] + 1
+    bot.memory['jobs']['count'] = jid
+    bot.say('[{}] completing "{}" {} times'.format(jid, trigger.group(2), n))
+    for i in range(0, n):
+        bot.say("[{}.{}] {}".format(jid, i, transformer.predict(trigger.group(2))))
 
 @sopel.module.commands('context')
 def context(bot, trigger):
