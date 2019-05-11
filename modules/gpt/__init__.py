@@ -107,8 +107,8 @@ def comp5(bot, trigger):
     n = 5
     jid = bot.memory['jobs']['count'] + 1
     bot.memory['jobs']['count'] = jid
-    bot.say('{}: [{}] completing "{}" {} times'.format(
-        trigger.nick, jid, trigger.group(2), n)
+    bot.say('[{}] completing "{}" {} times for {}'.format(
+        jid, trigger.group(2), n, trigger.nick)
     )
     for i in range(0, n):
         bot.say("[{}.{}] {}".format(jid, i, transformer.predict(trigger.group(2))))
@@ -128,10 +128,12 @@ def context5(bot, trigger):
 
     lines = trigger.group(2).split('./#@')
 
-    bot.say('{}: [{}] completing {} lines {} times'.format(trigger.nick,
-                                                           jid,
-                                                           len(lines),
-                                                           n))
+    bot.say('[{}] completing {} lines {} times for {}'.format(
+        jid,
+        len(lines),
+        n,
+        trigger.nick,
+    ))
 
     context = '\n'.join(lines)
     for i in range(0, n):
