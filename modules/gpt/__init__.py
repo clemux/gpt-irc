@@ -1,8 +1,8 @@
 import json
 import numpy as np
 import os
-import tensorflow as tf
 import random
+import tensorflow as tf
 
 import sopel.module, sopel.tools
 
@@ -75,6 +75,8 @@ class Transformer:
                 for i in range(self.batch_size):
                     generated += 1
                     text = self.enc.decode(out[i])
+                    # FIXME: ugly hack to get only one line
+                    # (model finetuned on IRC logs)
                     return '\n'.join(text.split('\n')[:self.nb_lines])
 
         return None
@@ -85,6 +87,8 @@ class Transformer:
 
 def setup(bot):
     global transformer
+    # FIXME: put model_name, length, temperature in sopel configuration file
+    # model_name: name of the folder containing the model, in 
     transformer = Transformer(
         model_name='tdl-gpu-3',
         length=20,
