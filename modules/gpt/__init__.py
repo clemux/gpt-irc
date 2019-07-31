@@ -1,3 +1,8 @@
+# Copyright Clement Schreiner, 2019
+# Transformer class based on:
+# https://github.com/nshepperd/gpt-2/blob/e99ee3748b6a41e9532538bfc3af17f0b64a5caf/src/interactive_conditional_samples.py
+# (MIT/Expat license)
+
 import json
 import numpy as np
 import os
