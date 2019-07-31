@@ -1,0 +1,18 @@
+Ugly sopel module for using a model trained with
+https://github.com/nshepperd/gpt-2
+
+- install sopel https://github.com/sopel-irc/sopel
+  (e.g. pip install sopel)
+
+- git clone https://github.com/clemux/gpt-irc.git ~/.sopel/
+
+- run sopel with no argument to start the configuration wizard
+
+- modify ~/.sopel/modules/gpt/__init__.py to suit your needs
+
+- read ~/.sopel/modules/gpt/__init__.py to get actual usage instructions
+
+
+Credits to the OpenAI team and https://github.com/nshepperd/gpt-2 for most of
+the actual work.
+
