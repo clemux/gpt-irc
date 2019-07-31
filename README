@@ -12,6 +12,10 @@ https://github.com/nshepperd/gpt-2
 
 - read ~/.sopel/modules/gpt/__init__.py to get actual usage instructions
 
+- git clone https://github.com/nshepperd/gpt-2.git /path/to/nshepperd/gpt-2
+
+- PYTHONPATH=/path/to/nshepperd/gpt-2/src/ sopel
+
 
 Credits to the OpenAI team and https://github.com/nshepperd/gpt-2 for most of
 the actual work.
